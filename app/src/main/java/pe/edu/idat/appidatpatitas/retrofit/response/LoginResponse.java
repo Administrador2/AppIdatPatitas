@@ -8,6 +8,15 @@ public class LoginResponse {
     private String email;
     private String celular;
     private String password;
+    private String usuario;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
     public boolean isRpta() {
         return rpta;

@@ -11,15 +11,18 @@ import android.view.View;
 import com.google.android.material.snackbar.Snackbar;
 
 import pe.edu.idat.appidatpatitas.R;
+import pe.edu.idat.appidatpatitas.bd.entity.Persona;
 import pe.edu.idat.appidatpatitas.databinding.ActivityMainBinding;
 import pe.edu.idat.appidatpatitas.retrofit.request.LoginRequest;
 import pe.edu.idat.appidatpatitas.retrofit.response.LoginResponse;
 import pe.edu.idat.appidatpatitas.viewmodel.AuthViewModel;
+import pe.edu.idat.appidatpatitas.viewmodel.PersonaViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
     private ActivityMainBinding binding;
     private AuthViewModel authViewModel;
+    private PersonaViewModel personaViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(binding.getRoot());
         authViewModel = new ViewModelProvider(this)
                 .get(AuthViewModel.class);
+        personaViewModel = new ViewModelProvider(this)
+                .get(PersonaViewModel.class);
         binding.btningresar.setOnClickListener(this);
         binding.btnregistro.setOnClickListener(this);
         authViewModel.loginResponseMutableLiveData
@@ -63,6 +68,15 @@ public class MainActivity extends AppCompatActivity
         if(loginResponse.isRpta()){
             startActivity(new Intent(MainActivity.this,
                     HomeActivity.class));
+            Persona nuevaPersona = new Persona();
+            nuevaPersona.setId(Integer.parseInt(loginResponse.getIdpersona()));
+            nuevaPersona.setNombres(loginResponse.getNombres());
+            nuevaPersona.setApellidos(loginResponse.getApellidos());
+            nuevaPersona.setUsuario(loginResponse.getUsuario());
+            nuevaPersona.setPassword(loginResponse.getPassword());
+            nuevaPersona.setEmail(loginResponse.getEmail());
+            nuevaPersona.setEsvoluntario(loginResponse.getEsvoluntario());
+            personaViewModel.insertarPersona(nuevaPersona);
         }else{
             Snackbar.make(binding.getRoot(), loginResponse.getMensaje(),
                     Snackbar.LENGTH_LONG).show();
