@@ -2,6 +2,7 @@ package pe.edu.idat.appidatpatitas.view.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 import java.util.List;
 
@@ -20,7 +22,8 @@ import pe.edu.idat.appidatpatitas.view.adapters.MascotaAdapter;
 import pe.edu.idat.appidatpatitas.viewmodel.MascotaViewModel;
 
 
-public class MascotaFragment extends Fragment {
+public class MascotaFragment extends Fragment
+        implements SearchView.OnQueryTextListener {
 
     private FragmentMascotaBinding binding;
     private MascotaViewModel mascotaViewModel;
@@ -46,6 +49,18 @@ public class MascotaFragment extends Fragment {
                     }
                 }
         );
+        binding.sbmascota.setOnQueryTextListener(this);
         return binding.getRoot();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        mascotaAdapter.filtrarMascotas(s);
+        return false;
     }
 }

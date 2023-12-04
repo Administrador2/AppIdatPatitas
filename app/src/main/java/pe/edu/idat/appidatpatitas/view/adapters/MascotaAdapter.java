@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import pe.edu.idat.appidatpatitas.databinding.ItemMascotaBinding;
 import pe.edu.idat.appidatpatitas.retrofit.response.MascotaResponse;
@@ -18,6 +19,7 @@ import pe.edu.idat.appidatpatitas.retrofit.response.MascotaResponse;
 public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHolder> {
 
     List<MascotaResponse> mascotaResponseList = new ArrayList<>();
+    List<MascotaResponse> mascotaResponseListOriginal = new ArrayList<>();
 
     @NonNull
     @Override
@@ -45,6 +47,24 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHold
 
     public void setMascotas(List<MascotaResponse> mascotas){
         mascotaResponseList.addAll(mascotas);
+        notifyDataSetChanged();
+        mascotaResponseListOriginal.addAll(mascotas);
+    }
+    public void filtrarMascotas(String filtro){
+        if(filtro.isEmpty()){
+            mascotaResponseList.clear();
+            mascotaResponseList.addAll(mascotaResponseListOriginal);
+        }else{
+            List<MascotaResponse> busquedaMascota =
+                    mascotaResponseList.stream()
+                            .filter(m -> m.getNommascota()
+                                    .toLowerCase().contains(
+                                            filtro.toLowerCase()))
+                            .collect(Collectors.toList());
+            mascotaResponseList.clear();
+            mascotaResponseList.addAll(busquedaMascota);
+        }
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

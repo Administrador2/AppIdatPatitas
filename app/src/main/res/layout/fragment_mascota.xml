@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.MascotaFragment">
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/sbmascota"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
