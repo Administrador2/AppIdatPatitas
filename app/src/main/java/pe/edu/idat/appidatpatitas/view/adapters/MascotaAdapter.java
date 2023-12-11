@@ -46,6 +46,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHold
     }
 
     public void setMascotas(List<MascotaResponse> mascotas){
+        mascotaResponseList.clear();
         mascotaResponseList.addAll(mascotas);
         notifyDataSetChanged();
         mascotaResponseListOriginal.addAll(mascotas);
