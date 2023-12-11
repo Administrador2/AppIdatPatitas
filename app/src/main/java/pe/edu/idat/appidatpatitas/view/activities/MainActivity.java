@@ -15,6 +15,7 @@ import pe.edu.idat.appidatpatitas.bd.entity.Persona;
 import pe.edu.idat.appidatpatitas.databinding.ActivityMainBinding;
 import pe.edu.idat.appidatpatitas.retrofit.request.LoginRequest;
 import pe.edu.idat.appidatpatitas.retrofit.response.LoginResponse;
+import pe.edu.idat.appidatpatitas.util.SharedPreferencesManager;
 import pe.edu.idat.appidatpatitas.viewmodel.AuthViewModel;
 import pe.edu.idat.appidatpatitas.viewmodel.PersonaViewModel;
 
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity
             nuevaPersona.setEmail(loginResponse.getEmail());
             nuevaPersona.setEsvoluntario(loginResponse.getEsvoluntario());
             personaViewModel.insertarPersona(nuevaPersona);
+            SharedPreferencesManager.setBooleanValue(
+                    "guardarclave", true);
         }else{
             Snackbar.make(binding.getRoot(), loginResponse.getMensaje(),
                     Snackbar.LENGTH_LONG).show();
